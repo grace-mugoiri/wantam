@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WANTAM</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --black: #0a0a0a;
+            --white: #f5f0e8;
+            --red: #c0392b;
+            --green: #1a5c2a;
+            --gold: #d4a017;
+            --stamp-red: rgba(192, 57, 43, 0.85);
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--black);
+            font-family: 'Courier Prime', monospace;
+            color: var(--white);
+        }
+
+        /* ── SCENE BASE ── */
+        .scene {
+            position: fixed;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .scene.active {
+            display: flex;
+        }
+
+        .scene.visible {
+            opacity: 1;
+        }
+
+        /* ── NEXT BUTTON ── */
+        .next-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--red);
+            color: var(--white);
+            border: none;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            letter-spacing: 0.1em;
+            padding: 0.7rem 1.8rem;
+            cursor: pointer;
+            z-index: 999;
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .next-btn:hover {
+            background: #e74c3c;
+            transform: scale(1.05);
+        }
+
+        .next-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ══════════════════════════════
+     SCENE 0 — LANDING / INTRO
+  ══════════════════════════════ */
+        #scene-0 {
+            background: var(--black);
+        }
+
+        .landing-inner {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .w-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(5rem, 25vw, 14rem);
+            line-height: 0.9;
+            color: var(--white);
+            letter-spacing: 0.05em;
+            position: relative;
+        }
+
+        .w-title span {
+            display: inline-block;
+            animation: jitter 6s infinite;
+        }
+
+        .w-title span:nth-child(2) {
+            animation-delay: 0.15s;
+            color: var(--red);
+        }
+
+        .w-title span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .w-title span:nth-child(4) {
+            animation-delay: 0.45s;
+        }
+
+        .w-title span:nth-child(5) {
+            animation-delay: 0.6s;
+        }
+
+        .w-title span:nth-child(6) {
+            animation-delay: 0.75s;
+            color: var(--green);
+        }
+
+        @keyframes jitter {
+
+            0%,
+            90%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            92% {
+                transform: translate(-2px, 1px) rotate(-0.5deg);
+            }
+
+            94% {
+                transform: translate(2px, -1px) rotate(0.5deg);
+            }
+
+            96% {
+                transform: translate(-1px, 2px) rotate(-0.3deg);
+            }
+        }
+
+        .w-sub {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(0.9rem, 3vw, 1.3rem);
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .w-tagline {
+            font-size: clamp(0.75rem, 2vw, 1rem);
+            color: rgba(245, 240, 232, 0.5);
+            margin-top: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .enter-btn {
+            margin-top: 2rem;
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            letter-spacing: 0.15em;
+            padding: 0.8rem 3rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .enter-btn:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        /* ══════════════════════════════
+     SCENE 1 — GROWING TEXT
+  ══════════════════════════════ */
+        #scene-1 {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .grow-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .grow-line {
+            font-family: 'Bebas Neue', sans-serif;
+            line-height: 1;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.3s, transform 0.3s;
+            white-space: nowrap;
+        }
+
+        .grow-line.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ══════════════════════════════
+     SCENE 2 — EXIT DOOR
+  ══════════════════════════════ */
+        #scene-2 {
+            background: #111;
+        }
+
+        .door-wrap {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .door-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.5rem, 6vw, 3rem);
+            letter-spacing: 0.1em;
+            color: var(--gold);
+        }
+
+        .door {
+            width: clamp(80px, 20vw, 140px);
+            height: clamp(140px, 35vw, 240px);
+            background: #2a1a0a;
+            border: 3px solid var(--gold);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            cursor: pointer;
+            transform-origin: left center;
+            transition: transform 0.6s ease;
+            box-shadow: inset -4px 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .door.open {
+            transform: perspective(400px) rotateY(-60deg);
+        }
+
+        .door-knob {
+            position: absolute;
+            right: 14%;
+            top: 50%;
+            width: 12px;
+            height: 12px;
+            background: var(--gold);
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .door-panel {
+            position: absolute;
+            inset: 12px;
+            border: 1px solid rgba(212, 160, 23, 0.3);
+        }
+
+        .door-msg {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+            color: rgba(245, 240, 232, 0.6);
+            max-width: 340px;
+            min-height: 2.5em;
+        }
+
+        /* ══════════════════════════════
+     SCENE 3 — PROMISE COUNTER
+  ══════════════════════════════ */
+        #scene-3 {
+            background: #0d1f0d;
+        }
+
+        .counter-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .counter-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            text-align: center;
+        }
+
+        .counter-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(5rem, 22vw, 11rem);
+            line-height: 1;
+            color: var(--white);
+            min-width: 3ch;
+            text-align: center;
+        }
+
+        .counter-label {
+            font-size: clamp(0.7rem, 2vw, 0.95rem);
+            color: rgba(245, 240, 232, 0.4);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .confetti-note {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            color: var(--gold);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .confetti-note.show {
+            opacity: 1;
+        }
+
+        /* ══════════════════════════════
+     SCENE 4 — STAMP
+  ══════════════════════════════ */
+        #scene-4 {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .stamp-area {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .stamp-doc {
+            background: var(--white);
+            border: 1px solid #ccc;
+            padding: clamp(1rem, 4vw, 2.5rem);
+            width: clamp(260px, 70vw, 480px);
+            box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.15);
+            position: relative;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            line-height: 1.7;
+            color: #333;
+        }
+
+        .doc-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1rem, 3.5vw, 1.5rem);
+            text-align: center;
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.1em;
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.4rem;
+        }
+
+        .doc-line {
+            margin-bottom: 0.4rem;
+        }
+
+        .doc-blank {
+            display: inline-block;
+            width: 120px;
+            border-bottom: 1px solid #333;
+        }
+
+        .stamp-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.1s;
+        }
+
+        .stamp-overlay.show {
+            opacity: 1;
+        }
+
+        .stamp-circle {
+            border: 6px solid var(--stamp-red);
+            border-radius: 50%;
+            width: clamp(120px, 30vw, 180px);
+            height: clamp(120px, 30vw, 180px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-18deg);
+            animation: stampIn 0.15s cubic-bezier(0.2, 0, 0, 1.5) both;
+        }
+
+        .stamp-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.2rem, 5vw, 2rem);
+            color: var(--stamp-red);
+            text-align: center;
+            letter-spacing: 0.05em;
+            line-height: 1.1;
+        }
+
+        @keyframes stampIn {
+            0% {
+                transform: rotate(-18deg) scale(3);
+                opacity: 0;
+            }
+
+            60% {
+                transform: rotate(-18deg) scale(0.9);
+                opacity: 1;
+            }
+
+            100% {
+                transform: rotate(-18deg) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .stamp-btn {
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1rem, 3.5vw, 1.4rem);
+            letter-spacing: 0.1em;
+            padding: 0.7rem 2rem;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            transition: opacity 0.2s;
+        }
+
+        .stamp-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* ══════════════════════════════
+     SCENE 5 — HALL OF FAME
+  ══════════════════════════════ */
+        #scene-5 {
+            background: #1a1008;
+        }
+
+        .hall-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .hall-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.5rem, 6vw, 2.8rem);
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            text-align: center;
+        }
+
+        .hall-sub {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(0.75rem, 2vw, 0.95rem);
+            color: rgba(245, 240, 232, 0.5);
+            text-align: center;
+        }
+
+        .hall-frame {
+            border: 3px solid var(--gold);
+            width: clamp(240px, 70vw, 420px);
+            height: clamp(100px, 25vw, 160px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(212, 160, 23, 0.05);
+            position: relative;
+        }
+
+        .hall-frame::before,
+        .hall-frame::after {
+            content: '✦';
+            position: absolute;
+            color: var(--gold);
+            font-size: 1.2rem;
+            opacity: 0.5;
+        }
+
+        .hall-frame::before {
+            top: 8px;
+            left: 12px;
+        }
+
+        .hall-frame::after {
+            bottom: 8px;
+            right: 12px;
+        }
+
+        .hall-empty {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            color: rgba(245, 240, 232, 0.25);
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .hall-note {
+            font-size: clamp(0.65rem, 1.8vw, 0.8rem);
+            color: rgba(245, 240, 232, 0.3);
+            letter-spacing: 0.1em;
+            text-align: center;
+        }
+
+        /* ══════════════════════════════
+     SCENE 6 — OATH GENERATOR
+  ══════════════════════════════ */
+        #scene-6 {
+            background: #0a0a14;
+        }
+
+        .oath-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .oath-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.5rem, 6vw, 2.5rem);
+            letter-spacing: 0.1em;
+            color: var(--gold);
+        }
+
+        .oath-input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--white);
+            color: var(--white);
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(1rem, 3.5vw, 1.4rem);
+            text-align: center;
+            width: clamp(180px, 55vw, 300px);
+            padding: 0.4rem;
+            outline: none;
+        }
+
+        .oath-input::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .oath-generate {
+            background: var(--green);
+            color: var(--white);
+            border: none;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            letter-spacing: 0.1em;
+            padding: 0.6rem 1.8rem;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+            transition: opacity 0.2s;
+        }
+
+        .oath-generate:hover {
+            opacity: 0.85;
+        }
+
+        .oath-output {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(0.85rem, 2.5vw, 1.05rem);
+            color: var(--white);
+            line-height: 1.7;
+            text-align: center;
+            max-width: 400px;
+            min-height: 5em;
+            opacity: 0;
+            transition: opacity 0.4s;
+            border: 1px solid rgba(212, 160, 23, 0.25);
+            padding: 1rem;
+        }
+
+        .oath-output.show {
+            opacity: 1;
+        }
+
+        /* ══════════════════════════════
+     SCENE 7 — WANTAM-O-METER
+  ══════════════════════════════ */
+        #scene-7 {
+            background: #0f0f0f;
+        }
+
+        .meter-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .meter-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.5rem, 6vw, 2.8rem);
+            letter-spacing: 0.1em;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .meter-bar-wrap {
+            width: clamp(240px, 70vw, 480px);
+            background: #1a1a1a;
+            border: 2px solid #333;
+            height: clamp(32px, 8vw, 52px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .meter-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s linear, background 0.5s;
+            background: var(--green);
+        }
+
+        .meter-labels {
+            width: clamp(240px, 70vw, 480px);
+            display: flex;
+            justify-content: space-between;
+            font-size: clamp(0.6rem, 1.8vw, 0.8rem);
+            color: rgba(245, 240, 232, 0.4);
+            letter-spacing: 0.05em;
+        }
+
+        .meter-status {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(1rem, 3.5vw, 1.5rem);
+            color: var(--gold);
+            text-align: center;
+            min-height: 2em;
+        }
+
+        /* ══════════════════════════════
+     SCENE 8 — BOOMERANG
+  ══════════════════════════════ */
+        #scene-8 {
+            background: #1a0a0a;
+        }
+
+        .boom-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .boom-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.4rem, 5vw, 2.5rem);
+            letter-spacing: 0.08em;
+            color: var(--white);
+            text-align: center;
+            max-width: 420px;
+        }
+
+        .boom-emoji {
+            font-size: clamp(3rem, 12vw, 6rem);
+            display: block;
+            animation: boomerang 2.5s ease-in-out infinite;
+        }
+
+        @keyframes boomerang {
+            0% {
+                transform: translateX(-120px) rotate(0deg);
+                opacity: 0;
+            }
+
+            30% {
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateX(120px) rotate(360deg);
+            }
+
+            70% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(-120px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .boom-sub {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(0.8rem, 2.5vw, 1.05rem);
+            color: rgba(245, 240, 232, 0.55);
+            text-align: center;
+            max-width: 360px;
+            line-height: 1.6;
+        }
+
+        /* ══════════════════════════════
+     SCENE 9 — INFINITE ECHO
+  ══════════════════════════════ */
+        #scene-9 {
+            background: var(--black);
+            overflow: hidden;
+        }
+
+        .echo-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .echo-word {
+            position: absolute;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 10vw, 5rem);
+            letter-spacing: 0.1em;
+            color: var(--white);
+            white-space: nowrap;
+            animation: echo-out 2s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes echo-out {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(4);
+            }
+        }
+
+        /* ══════════════════════════════
+     SCENE 10 — TICKER
+  ══════════════════════════════ */
+        #scene-10 {
+            background: #f5f0e8;
+            color: #0a0a0a;
+        }
+
+        .ticker-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .ticker-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.4rem, 5vw, 2.5rem);
+            letter-spacing: 0.08em;
+            text-align: center;
+            color: var(--black);
+        }
+
+        .ticker-band {
+            width: 100%;
+            background: var(--black);
+            overflow: hidden;
+            padding: 0.8rem 0;
+            white-space: nowrap;
+        }
+
+        .ticker-inner {
+            display: inline-flex;
+            gap: 4rem;
+            animation: scroll-left 18s linear infinite;
+            white-space: nowrap;
+        }
+
+        .ticker-item {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+            color: var(--gold);
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .ticker-note {
+            font-family: 'Courier Prime', monospace;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            color: rgba(10, 10, 10, 0.45);
+            text-align: center;
+            max-width: 380px;
+            line-height: 1.6;
+        }
+
+        /* ══════════════════════════════
+     NOISE OVERLAY
+  ══════════════════════════════ */
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="noise"></div>
+
+    <!-- NEXT BUTTON (hidden on landing) -->
+    <button class="next-btn" id="nextBtn" style="display:none" onclick="nextScene()">Next Wantam →</button>
+
+    <!-- ════════ SCENE 0: LANDING ════════ -->
+    <div class="scene active" id="scene-0">
+        <div class="landing-inner">
+            <div class="w-title">
+                <span>W</span><span>A</span><span>N</span><span>T</span><span>A</span><span>M</span>
+            </div>
+            <div class="w-sub">One Term. You Promised.</div>
+            <div class="w-tagline">A reminder. A movement. A very mild inconvenience.</div>
+            <button class="enter-btn" onclick="startJourney()">Enter The Zone</button>
+        </div>
+    </div>
+
+    <!-- ════════ SCENE 1: GROWING TEXT ════════ -->
+    <div class="scene" id="scene-1">
+        <div class="grow-wrap" id="growWrap"></div>
+    </div>
+
+    <!-- ════════ SCENE 2: EXIT DOOR ════════ -->
+    <div class="scene" id="scene-2">
+        <div class="door-wrap">
+            <div class="door-label">The Exit Door</div>
+            <div class="door" id="theDoor" onclick="knockDoor()">
+                <div class="door-panel"></div>
+                <div class="door-knob"></div>
+            </div>
+            <div class="door-msg" id="doorMsg">Click the door to leave.</div>
+        </div>
+    </div>
+
+    <!-- ════════ SCENE 3: PROMISE COUNTER ════════ -->
+    <div class="scene" id="scene-3">
+        <div class="counter-wrap">
+            <div class="counter-title">Promises Kept</div>
+            <div class="counter-num" id="counterNum">0</div>
+            <div class="counter-label">out of 1</div>
+            <div class="confetti-note" id="confettiNote">🎊 Congratulations on this historic achievement 🎊</div>
+        </div>
+    </div>
+
+    <!-- ════════ SCENE 4: STAMP ════════ -->
+    <div class="scene" id="scene-4">
+        <div class="stamp-area">
+            <div class="stamp-doc" id="stampDoc">
+                <div class="doc-title">Official Declaration of Intent</div>
+                <div class="doc-line">I, <span class="doc-blank"></span>, do hereby solemnly declare</div>
+                <div class="doc-line">that I shall serve <strong>ONE (1) term</strong> and one term only.</div>
+                <div class="doc-line">I will not, under any circumstances, find a reason to stay longer.</div>
+                <div class="doc-line">Signed: <span class="doc-blank"></span></div>
+                <div class="doc-line" style="margin-top:0.6rem">Date: <span class="doc-blank"></span></div>
+                <div class="stamp-overlay" id="stampOverlay">
+                    <div class="stamp-circle">
+                        <div class="stamp-text" id="stampText">NOTED<br>& FILED</div>
+                    </div>
+                </div>
+            </div>
+            <button class="stamp-btn" id="stampBtn" onclick="applyStamp()">Apply Stamp</button>
+        </div>
+    </div>
+
+    <!-- ════════ SCENE 5: HALL OF FAME ════════ -->
+    <div class="scene" id="scene-5">
+        <div class="hall-wrap">
+            <div class="hall-title">🏛️ Wantam Hall of Fame</div>
+            <div class="hall-sub">Honoring those who said "one term" and actually meant it</div>
+            <div class="hall-frame">
+                <div class="hall-empty">( This space intentionally left blank )</div>
+            </div>
+            <div class="hall-note">* Nominations open. Always have been. Always will be.</div>
+        </div>
+    </div>
+
+    <!-- ════════ SCENE 6: OATH GENERATOR ════════ -->
+    <div class="scene" id="scene-6">
+        <div class="oath-wrap">
+            <div class="oath-title">The Wantam Oath Generator</div>
+            <input class="oath-input" id="oathName" placeholder="Enter your name" maxlength="24">
+            <button class="oath-generate" onclick="generateOath()">Take the Oath</button>
+            <div class="oath-output" id="oathOutput"></div>
+        </div>
+    </div>
+
+    <!-- ════════ SCENE 7: WANTAM-O-METER ════════ -->
+    <div class="scene" id="scene-7">
+        <div class="meter-wrap">
+            <div class="meter-title">Wantam-O-Meter</div>
+            <div class="meter-bar-wrap">
+                <div class="meter-bar" id="meterBar"></div>
+            </div>
+            <div class="meter-labels">
+                <span>Fresh Mandate</span>
+                <span>Getting Comfortable</span>
+                <span>Overstayed</span>
+            </div>
+            <div class="meter-status" id="meterStatus">Calculating your overstay...</div>
+        </div>
+    </div>
+
+    <!-- ════════ SCENE 8: BOOMERANG ════════ -->
+    <div class="scene" id="scene-8">
+        <div class="boom-wrap">
+            <div class="boom-title">You Voted Them Out</div>
+            <span class="boom-emoji">🪃</span>
+            <div class="boom-sub">
+                And yet here they are.<br>
+                Like a boomerang in a small room.<br>
+                Wantam was right all along.
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════ SCENE 9: INFINITE ECHO ════════ -->
+    <div class="scene" id="scene-9">
+        <div class="echo-wrap" id="echoWrap">
+        </div>
+    </div>
+
+    <!-- ════════ SCENE 10: TICKER ════════ -->
+    <div class="scene" id="scene-10">
+        <div class="ticker-wrap">
+            <div class="ticker-title">Things That Should Only Happen Once</div>
+            <div class="ticker-band">
+                <div class="ticker-inner" id="tickerInner"></div>
+            </div>
+            <div class="ticker-note">This page will now reset. You've served your time here.<br>Unlike some people.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ── STATE ──
+        const TOTAL_SCENES = 11;
+        let currentScene = 0;
+        let sceneTimers = [];
+
+        // ── HELPERS ──
+        function clearTimers() { sceneTimers.forEach(clearTimeout); sceneTimers = []; }
+        function t(fn, ms) { sceneTimers.push(setTimeout(fn, ms)); }
+
+        function showScene(idx) {
+            clearTimers();
+            const scenes = document.querySelectorAll('.scene');
+            scenes.forEach(s => { s.classList.remove('active', 'visible'); });
+            const next = document.getElementById('scene-' + idx);
+            if (!next) return;
+            next.classList.add('active');
+            t(() => next.classList.add('visible'), 30);
+            document.getElementById('nextBtn').style.display = idx === 0 ? 'none' : 'block';
+            currentScene = idx;
+            initScene(idx);
+        }
+
+        function nextScene() {
+            let next = currentScene + 1;
+            if (next >= TOTAL_SCENES) next = 1; // loop forever (except landing)
+            showScene(next);
+        }
+
+        function startJourney() { showScene(1); }
+
+        // ── SCENE INIT ──
+        function initScene(idx) {
+            if (idx === 1) initGrow();
+            if (idx === 2) initDoor();
+            if (idx === 3) initCounter();
+            if (idx === 4) initStamp();
+            if (idx === 6) initOath();
+            if (idx === 7) initMeter();
+            if (idx === 9) initEcho();
+            if (idx === 10) initTicker();
+        }
+
+        // ── SCENE 1: GROW ──
+        const growLines = [
+            { text: 'ONE TERM', size: '8vw' },
+            { text: 'ONE. TERM.', size: '10vw' },
+            { text: 'O N E  T E R M', size: '7vw' },
+            { text: 'ONE TERM!!!', size: '13vw' },
+            { text: '1️⃣ TERM', size: '15vw' },
+        ];
+        function initGrow() {
+            const wrap = document.getElementById('growWrap');
+            wrap.innerHTML = '';
+            growLines.forEach((l, i) => {
+                const el = document.createElement('div');
+                el.className = 'grow-line';
+                el.style.fontSize = `clamp(1rem, ${l.size}, ${parseInt(l.size) * 5}px)`;
+                el.textContent = l.text;
+                wrap.appendChild(el);
+                t(() => el.classList.add('show'), 300 + i * 400);
+            });
+        }
+
+        // ── SCENE 2: DOOR ──
+        const doorMessages = [
+            "It's locked. From the inside.",
+            "You pulled. You should push.",
+            "The door says 'Exit' but leads back in.",
+            "Interesting. Let's try again.",
+            "The door has filed for an extension.",
+            "It's stuck. Much like some careers.",
+            "A third knock? Bold strategy.",
+            "The door requires a second term to open.",
+            "This door has been in office since 2022.",
+            "Wantam! The door must also go!"
+        ];
+        let doorKnocks = 0;
+        function initDoor() {
+            doorKnocks = 0;
+            document.getElementById('theDoor').classList.remove('open');
+            document.getElementById('doorMsg').textContent = 'Click the door to leave.';
+        }
+        function knockDoor() {
+            const door = document.getElementById('theDoor');
+            const msg = document.getElementById('doorMsg');
+            door.classList.add('open');
+            t(() => door.classList.remove('open'), 700);
+            msg.textContent = doorMessages[Math.min(doorKnocks, doorMessages.length - 1)];
+            doorKnocks++;
+        }
+
+        // ── SCENE 3: COUNTER ──
+        function initCounter() {
+            const el = document.getElementById('counterNum');
+            const note = document.getElementById('confettiNote');
+            el.textContent = '0';
+            note.classList.remove('show');
+            let up = 0;
+            const tick = setInterval(() => {
+                up++;
+                el.textContent = up;
+                if (up >= 7) {
+                    clearInterval(tick);
+                    t(() => {
+                        el.style.transition = 'color 0.3s';
+                        el.style.color = '#c0392b';
+                        el.textContent = '0';
+                        t(() => { el.style.color = ''; }, 600);
+                        t(() => note.classList.add('show'), 800);
+                    }, 400);
+                }
+            }, 120);
+            sceneTimers.push(tick);
+        }
+
+        // ── SCENE 4: STAMP ──
+        const stampTexts = ['NOTED\n& FILED', 'TERM\nEXPIRED', 'ONE\nTERM', 'SEE\nYOU NEVER', 'WANTAM\nAPPROVED'];
+        let stampUsed = false;
+        function initStamp() {
+            stampUsed = false;
+            document.getElementById('stampOverlay').classList.remove('show');
+            document.getElementById('stampBtn').style.display = 'block';
+            document.getElementById('stampText').innerHTML = stampTexts[0].replace('\n', '<br>');
+        }
+        function applyStamp() {
+            if (stampUsed) return;
+            stampUsed = true;
+            const txt = stampTexts[Math.floor(Math.random() * stampTexts.length)];
+            document.getElementById('stampText').innerHTML = txt.replace('\n', '<br>');
+            document.getElementById('stampOverlay').classList.add('show');
+            document.getElementById('stampBtn').style.display = 'none';
+        }
+
+        // ── SCENE 6: OATH ──
+        const oathTemplates = [
+            (n) => `I, ${n}, do solemnly swear to eat only ONE slice of cake at the party. This oath expires immediately upon seeing a second slice.`,
+            (n) => `I, ${n}, hereby declare I will watch just ONE more episode. This promise has never been kept in recorded history.`,
+            (n) => `I, ${n}, commit to ONE term of owning a gym membership. Term begins January. Term ends January 4th.`,
+            (n) => `I, ${n}, vow to send only ONE follow-up email. The second one is already drafted.`,
+            (n) => `I, ${n}, promise this is my LAST snooze. The snooze button has heard this before.`,
+            (n) => `I, ${n}, shall make just ONE comment at this meeting. The meeting was scheduled for 30 minutes.`,
+        ];
+        function initOath() {
+            document.getElementById('oathOutput').classList.remove('show');
+            document.getElementById('oathOutput').textContent = '';
+            document.getElementById('oathName').value = '';
+        }
+        function generateOath() {
+            const name = document.getElementById('oathName').value.trim() || 'Unnamed Candidate';
+            const tmpl = oathTemplates[Math.floor(Math.random() * oathTemplates.length)];
+            const out = document.getElementById('oathOutput');
+            out.classList.remove('show');
+            out.textContent = tmpl(name);
+            t(() => out.classList.add('show'), 50);
+        }
+
+        // ── SCENE 7: METER ──
+        const meterStages = [
+            { pct: 15, color: '#1a5c2a', text: 'Fresh mandate. Hopeful times.' },
+            { pct: 35, color: '#2d8a3e', text: 'Still okay. Mostly.' },
+            { pct: 55, color: '#d4a017', text: "Getting comfortable, aren't we." },
+            { pct: 72, color: '#e67e22', text: 'The chair is getting warmer.' },
+            { pct: 88, color: '#c0392b', text: 'Sir, the people have spoken.' },
+            { pct: 100, color: '#8b0000', text: '🚨 OVERSTAYED. WANTAM ACTIVATED. 🚨' },
+        ];
+        function initMeter() {
+            const bar = document.getElementById('meterBar');
+            const status = document.getElementById('meterStatus');
+            bar.style.width = '0%';
+            status.textContent = 'Calculating your overstay...';
+            let i = 0;
+            const advance = () => {
+                if (i >= meterStages.length) return;
+                const s = meterStages[i];
+                bar.style.width = s.pct + '%';
+                bar.style.background = s.color;
+                status.textContent = s.text;
+                i++;
+                sceneTimers.push(setTimeout(advance, 900));
+            };
+            t(advance, 600);
+        }
+
+        // ── SCENE 9: ECHO ──
+        let echoInterval = null;
+        const echoWords = ['WANTAM', 'ONE TERM', 'GO HOME', 'WANTAM', 'BYE BYE', 'WANTAM'];
+        let echoIdx = 0;
+        function initEcho() {
+            const wrap = document.getElementById('echoWrap');
+            wrap.innerHTML = '';
+            if (echoInterval) clearInterval(echoInterval);
+            echoInterval = setInterval(() => {
+                const word = echoWords[echoIdx % echoWords.length];
+                echoIdx++;
+                const el = document.createElement('div');
+                el.className = 'echo-word';
+                el.textContent = word;
+                el.style.color = echoIdx % 3 === 0 ? 'var(--red)' : echoIdx % 3 === 1 ? 'var(--white)' : 'var(--gold)';
+                wrap.innerHTML = '';
+                wrap.appendChild(el);
+            }, 700);
+            sceneTimers.push(echoInterval);
+        }
+
+        // ── SCENE 10: TICKER ──
+        const tickerItems = [
+            'Bad haircut ✂️', 'Dial-up internet 📞', 'That one meeting that could have been an email 📧',
+            'First pancake 🥞', 'Learning to ride a bike 🚲', 'Realising you left the stove on 🔥',
+            'Asking for directions and ignoring them 🗺️', 'The last slice of pizza 🍕',
+            'That gym membership 💪', "New Year's resolutions 🎊", 'Replying all 📩',
+            'The snooze button at 6am ⏰', 'Bad WiFi password 📶', 'Wearing white to a party 🤍',
+            'Holding a leadership position 🏛️'
+        ];
+        function initTicker() {
+            const inner = document.getElementById('tickerInner');
+            const doubled = [...tickerItems, ...tickerItems];
+            inner.innerHTML = doubled.map(i => `<span class="ticker-item">● ${i}</span>`).join('');
+        }
+
+        // ── INIT ──
+        showScene(0);
+    </script>
+</body>
+
+</html>
