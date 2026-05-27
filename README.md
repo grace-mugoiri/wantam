@@ -73,6 +73,7 @@ Requires an internet connection only for Google Fonts to load. Everything else w
 ## ☁️ Deployment
 
 Deployed as a static site on [Render](https://render.com).
+Live Demo: https://wantam-6k9c.onrender.com
 
 - **Build command:** *(none)*
 - **Publish directory:** `.`
