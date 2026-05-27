@@ -85,15 +85,160 @@
             transform: scale(0.97);
         }
 
-        /* ══════════════════════════════
-     SCENE 0 — LANDING / INTRO
-  ══════════════════════════════ */
+        /* ── MPESA POPUP ── */
+        .mpesa-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.78);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        .mpesa-backdrop.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .mpesa-card {
+            background: var(--black);
+            border: 2px solid var(--green);
+            max-width: 380px;
+            width: 100%;
+            padding: clamp(1.2rem, 5vw, 2rem);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.9rem;
+            clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+            transform: scale(0.88);
+            transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1.4);
+        }
+
+        .mpesa-backdrop.show .mpesa-card {
+            transform: scale(1);
+        }
+
+        .mpesa-close {
+            position: absolute;
+            top: 0.7rem;
+            right: 0.9rem;
+            background: none;
+            border: none;
+            color: rgba(245, 240, 232, 0.35);
+            font-size: 1.3rem;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .mpesa-close:hover {
+            color: var(--white);
+        }
+
+        .mpesa-icon {
+            font-size: clamp(2rem, 8vw, 3rem);
+            line-height: 1;
+        }
+
+        .mpesa-headline {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.1rem, 4.5vw, 1.7rem);
+            letter-spacing: 0.08em;
+            color: var(--white);
+            text-align: center;
+            line-height: 1.15;
+        }
+
+        .mpesa-subline {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(0.75rem, 2.5vw, 0.92rem);
+            color: rgba(245, 240, 232, 0.55);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .mpesa-number-wrap {
+            background: rgba(26, 92, 42, 0.18);
+            border: 1.5px solid var(--green);
+            padding: 0.6rem 1.4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.15rem;
+            width: 100%;
+        }
+
+        .mpesa-label {
+            font-size: clamp(0.6rem, 1.8vw, 0.72rem);
+            letter-spacing: 0.18em;
+            color: var(--green);
+            text-transform: uppercase;
+        }
+
+        .mpesa-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.6rem, 6vw, 2.2rem);
+            letter-spacing: 0.12em;
+            color: var(--white);
+        }
+
+        .mpesa-copy-btn {
+            background: none;
+            border: 1px solid rgba(245, 240, 232, 0.2);
+            color: rgba(245, 240, 232, 0.5);
+            font-family: 'Courier Prime', monospace;
+            font-size: clamp(0.65rem, 2vw, 0.78rem);
+            letter-spacing: 0.1em;
+            padding: 0.25rem 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 0.2rem;
+        }
+
+        .mpesa-copy-btn:hover {
+            border-color: var(--green);
+            color: var(--white);
+        }
+
+        .mpesa-amount {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+            color: var(--gold);
+            letter-spacing: 0.08em;
+            text-align: center;
+        }
+
+        .mpesa-dismiss {
+            background: transparent;
+            border: 1.5px solid rgba(245, 240, 232, 0.15);
+            color: rgba(245, 240, 232, 0.35);
+            font-family: 'Courier Prime', monospace;
+            font-size: clamp(0.65rem, 2vw, 0.78rem);
+            letter-spacing: 0.08em;
+            padding: 0.4rem 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 0.3rem;
+        }
+
+        .mpesa-dismiss:hover {
+            color: var(--white);
+            border-color: rgba(245, 240, 232, 0.4);
+        }
+
+        /* ══ SCENE 0 — LANDING ══ */
         #scene-0 {
             background: var(--black);
         }
 
         .landing-inner {
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -106,7 +251,6 @@
             line-height: 0.9;
             color: var(--white);
             letter-spacing: 0.05em;
-            position: relative;
         }
 
         .w-title span {
@@ -191,9 +335,7 @@
             color: var(--black);
         }
 
-        /* ══════════════════════════════
-     SCENE 1 — GROWING TEXT
-  ══════════════════════════════ */
+        /* ══ SCENE 1 — GROWING TEXT ══ */
         #scene-1 {
             background: var(--white);
             color: var(--black);
@@ -220,15 +362,12 @@
             transform: scale(1);
         }
 
-        /* ══════════════════════════════
-     SCENE 2 — EXIT DOOR
-  ══════════════════════════════ */
+        /* ══ SCENE 2 — EXIT DOOR ══ */
         #scene-2 {
             background: #111;
         }
 
         .door-wrap {
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -284,9 +423,7 @@
             min-height: 2.5em;
         }
 
-        /* ══════════════════════════════
-     SCENE 3 — PROMISE COUNTER
-  ══════════════════════════════ */
+        /* ══ SCENE 3 — PROMISE COUNTER ══ */
         #scene-3 {
             background: #0d1f0d;
         }
@@ -334,16 +471,13 @@
             opacity: 1;
         }
 
-        /* ══════════════════════════════
-     SCENE 4 — STAMP
-  ══════════════════════════════ */
+        /* ══ SCENE 4 — STAMP ══ */
         #scene-4 {
             background: var(--white);
             color: var(--black);
         }
 
         .stamp-area {
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -452,9 +586,7 @@
             opacity: 0.85;
         }
 
-        /* ══════════════════════════════
-     SCENE 5 — HALL OF FAME
-  ══════════════════════════════ */
+        /* ══ SCENE 5 — HALL OF FAME ══ */
         #scene-5 {
             background: #1a1008;
         }
@@ -528,9 +660,7 @@
             text-align: center;
         }
 
-        /* ══════════════════════════════
-     SCENE 6 — OATH GENERATOR
-  ══════════════════════════════ */
+        /* ══ SCENE 6 — OATH GENERATOR ══ */
         #scene-6 {
             background: #0a0a14;
         }
@@ -603,9 +733,7 @@
             opacity: 1;
         }
 
-        /* ══════════════════════════════
-     SCENE 7 — WANTAM-O-METER
-  ══════════════════════════════ */
+        /* ══ SCENE 7 — WANTAM-O-METER ══ */
         #scene-7 {
             background: #0f0f0f;
         }
@@ -631,7 +759,6 @@
             background: #1a1a1a;
             border: 2px solid #333;
             height: clamp(32px, 8vw, 52px);
-            position: relative;
             overflow: hidden;
         }
 
@@ -659,9 +786,7 @@
             min-height: 2em;
         }
 
-        /* ══════════════════════════════
-     SCENE 8 — BOOMERANG
-  ══════════════════════════════ */
+        /* ══ SCENE 8 — BOOMERANG ══ */
         #scene-8 {
             background: #1a0a0a;
         }
@@ -721,9 +846,7 @@
             line-height: 1.6;
         }
 
-        /* ══════════════════════════════
-     SCENE 9 — INFINITE ECHO
-  ══════════════════════════════ */
+        /* ══ SCENE 9 — INFINITE ECHO ══ */
         #scene-9 {
             background: var(--black);
             overflow: hidden;
@@ -761,9 +884,7 @@
             }
         }
 
-        /* ══════════════════════════════
-     SCENE 10 — TICKER
-  ══════════════════════════════ */
+        /* ══ SCENE 10 — TICKER ══ */
         #scene-10 {
             background: #f5f0e8;
             color: #0a0a0a;
@@ -827,9 +948,7 @@
             line-height: 1.6;
         }
 
-        /* ══════════════════════════════
-     NOISE OVERLAY
-  ══════════════════════════════ */
+        /* ── NOISE OVERLAY ── */
         .noise {
             position: fixed;
             inset: 0;
@@ -845,7 +964,6 @@
 
     <div class="noise"></div>
 
-    <!-- NEXT BUTTON (hidden on landing) -->
     <button class="next-btn" id="nextBtn" style="display:none" onclick="nextScene()">Next Wantam →</button>
 
     <!-- ════════ SCENE 0: LANDING ════════ -->
@@ -890,7 +1008,7 @@
     <!-- ════════ SCENE 4: STAMP ════════ -->
     <div class="scene" id="scene-4">
         <div class="stamp-area">
-            <div class="stamp-doc" id="stampDoc">
+            <div class="stamp-doc">
                 <div class="doc-title">Official Declaration of Intent</div>
                 <div class="doc-line">I, <span class="doc-blank"></span>, do hereby solemnly declare</div>
                 <div class="doc-line">that I shall serve <strong>ONE (1) term</strong> and one term only.</div>
@@ -960,8 +1078,7 @@
 
     <!-- ════════ SCENE 9: INFINITE ECHO ════════ -->
     <div class="scene" id="scene-9">
-        <div class="echo-wrap" id="echoWrap">
-        </div>
+        <div class="echo-wrap" id="echoWrap"></div>
     </div>
 
     <!-- ════════ SCENE 10: TICKER ════════ -->
@@ -976,20 +1093,36 @@
         </div>
     </div>
 
+    <!-- ════════ MPESA POPUP ════════ -->
+    <div class="mpesa-backdrop" id="mpesaBackdrop">
+        <div class="mpesa-card">
+            <button class="mpesa-close" onclick="closeMpesa()">✕</button>
+            <div class="mpesa-icon">☕</div>
+            <div class="mpesa-headline" id="mpesaHeadline">You've been here long enough.<br>Buy the developer a chai.
+            </div>
+            <div class="mpesa-subline" id="mpesaSubline">This website runs on vibes and 10 shillings.<br>It's less than
+                a mandazi. You can afford it.</div>
+            <div class="mpesa-number-wrap">
+                <div class="mpesa-label">Send via M-Pesa</div>
+                <div class="mpesa-number">0711 139 646</div>
+                <button class="mpesa-copy-btn" id="copyBtn" onclick="copyNumber()">tap to copy number</button>
+            </div>
+            <div class="mpesa-amount">KES 10 · KES 50 · KES 100 — your heart, your call 🙏</div>
+            <button class="mpesa-dismiss" onclick="closeMpesa()">Maybe later (no pressure)</button>
+        </div>
+    </div>
+
     <script>
-        // ── STATE ──
         const TOTAL_SCENES = 11;
         let currentScene = 0;
         let sceneTimers = [];
 
-        // ── HELPERS ──
         function clearTimers() { sceneTimers.forEach(clearTimeout); sceneTimers = []; }
         function t(fn, ms) { sceneTimers.push(setTimeout(fn, ms)); }
 
         function showScene(idx) {
             clearTimers();
-            const scenes = document.querySelectorAll('.scene');
-            scenes.forEach(s => { s.classList.remove('active', 'visible'); });
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active', 'visible'));
             const next = document.getElementById('scene-' + idx);
             if (!next) return;
             next.classList.add('active');
@@ -997,17 +1130,17 @@
             document.getElementById('nextBtn').style.display = idx === 0 ? 'none' : 'block';
             currentScene = idx;
             initScene(idx);
+            maybeTriggerMpesa(idx);
         }
 
         function nextScene() {
             let next = currentScene + 1;
-            if (next >= TOTAL_SCENES) next = 1; // loop forever (except landing)
+            if (next >= TOTAL_SCENES) next = 1;
             showScene(next);
         }
 
         function startJourney() { showScene(1); }
 
-        // ── SCENE INIT ──
         function initScene(idx) {
             if (idx === 1) initGrow();
             if (idx === 2) initDoor();
@@ -1019,7 +1152,7 @@
             if (idx === 10) initTicker();
         }
 
-        // ── SCENE 1: GROW ──
+        /* ── SCENE 1: GROW ── */
         const growLines = [
             { text: 'ONE TERM', size: '8vw' },
             { text: 'ONE. TERM.', size: '10vw' },
@@ -1040,7 +1173,7 @@
             });
         }
 
-        // ── SCENE 2: DOOR ──
+        /* ── SCENE 2: DOOR ── */
         const doorMessages = [
             "It's locked. From the inside.",
             "You pulled. You should push.",
@@ -1050,7 +1183,7 @@
             "It's stuck. Much like some careers.",
             "A third knock? Bold strategy.",
             "The door requires a second term to open.",
-            "This door has been in office since 2022.",
+            "This door has been in office since 2003.",
             "Wantam! The door must also go!"
         ];
         let doorKnocks = 0;
@@ -1061,14 +1194,13 @@
         }
         function knockDoor() {
             const door = document.getElementById('theDoor');
-            const msg = document.getElementById('doorMsg');
             door.classList.add('open');
             t(() => door.classList.remove('open'), 700);
-            msg.textContent = doorMessages[Math.min(doorKnocks, doorMessages.length - 1)];
+            document.getElementById('doorMsg').textContent = doorMessages[Math.min(doorKnocks, doorMessages.length - 1)];
             doorKnocks++;
         }
 
-        // ── SCENE 3: COUNTER ──
+        /* ── SCENE 3: COUNTER ── */
         function initCounter() {
             const el = document.getElementById('counterNum');
             const note = document.getElementById('confettiNote');
@@ -1092,7 +1224,7 @@
             sceneTimers.push(tick);
         }
 
-        // ── SCENE 4: STAMP ──
+        /* ── SCENE 4: STAMP ── */
         const stampTexts = ['NOTED\n& FILED', 'TERM\nEXPIRED', 'ONE\nTERM', 'SEE\nYOU NEVER', 'WANTAM\nAPPROVED'];
         let stampUsed = false;
         function initStamp() {
@@ -1110,14 +1242,14 @@
             document.getElementById('stampBtn').style.display = 'none';
         }
 
-        // ── SCENE 6: OATH ──
+        /* ── SCENE 6: OATH ── */
         const oathTemplates = [
-            (n) => `I, ${n}, do solemnly swear to eat only ONE slice of cake at the party. This oath expires immediately upon seeing a second slice.`,
-            (n) => `I, ${n}, hereby declare I will watch just ONE more episode. This promise has never been kept in recorded history.`,
-            (n) => `I, ${n}, commit to ONE term of owning a gym membership. Term begins January. Term ends January 4th.`,
-            (n) => `I, ${n}, vow to send only ONE follow-up email. The second one is already drafted.`,
-            (n) => `I, ${n}, promise this is my LAST snooze. The snooze button has heard this before.`,
-            (n) => `I, ${n}, shall make just ONE comment at this meeting. The meeting was scheduled for 30 minutes.`,
+            n => `I, ${n}, do solemnly swear to eat only ONE slice of cake at the party. This oath expires immediately upon seeing a second slice.`,
+            n => `I, ${n}, hereby declare I will watch just ONE more episode. This promise has never been kept in recorded history.`,
+            n => `I, ${n}, commit to ONE term of owning a gym membership. Term begins January. Term ends January 4th.`,
+            n => `I, ${n}, vow to send only ONE follow-up email. The second one is already drafted.`,
+            n => `I, ${n}, promise this is my LAST snooze. The snooze button has heard this before.`,
+            n => `I, ${n}, shall make just ONE comment at this meeting. The meeting was scheduled for 30 minutes.`,
         ];
         function initOath() {
             document.getElementById('oathOutput').classList.remove('show');
@@ -1133,7 +1265,7 @@
             t(() => out.classList.add('show'), 50);
         }
 
-        // ── SCENE 7: METER ──
+        /* ── SCENE 7: METER ── */
         const meterStages = [
             { pct: 15, color: '#1a5c2a', text: 'Fresh mandate. Hopeful times.' },
             { pct: 35, color: '#2d8a3e', text: 'Still okay. Mostly.' },
@@ -1160,7 +1292,7 @@
             t(advance, 600);
         }
 
-        // ── SCENE 9: ECHO ──
+        /* ── SCENE 9: ECHO ── */
         let echoInterval = null;
         const echoWords = ['WANTAM', 'ONE TERM', 'GO HOME', 'WANTAM', 'BYE BYE', 'WANTAM'];
         let echoIdx = 0;
@@ -1181,9 +1313,9 @@
             sceneTimers.push(echoInterval);
         }
 
-        // ── SCENE 10: TICKER ──
+        /* ── SCENE 10: TICKER ── */
         const tickerItems = [
-            'Bad haircut ✂️', 'Dial-up internet 📞', 'That one meeting that could have been an email 📧',
+            'Bad haircut ✂️', 'Dial-up internet 📞', 'That meeting that could have been an email 📧',
             'First pancake 🥞', 'Learning to ride a bike 🚲', 'Realising you left the stove on 🔥',
             'Asking for directions and ignoring them 🗺️', 'The last slice of pizza 🍕',
             'That gym membership 💪', "New Year's resolutions 🎊", 'Replying all 📩',
@@ -1196,7 +1328,69 @@
             inner.innerHTML = doubled.map(i => `<span class="ticker-item">● ${i}</span>`).join('');
         }
 
-        // ── INIT ──
+        /* ── MPESA POPUP ── */
+        const mpesaMessages = [
+            {
+                headline: "You've been here long enough.<br>Buy the developer a chai.",
+                sub: "This website runs on vibes and 10 shillings.<br>It's less than a mandazi. You can afford it."
+            },
+            {
+                headline: "Wantam! But also...<br>send something small.",
+                sub: "One term of support. That's all we ask.<br>Just like the website's whole message, really."
+            },
+            {
+                headline: "The door scene was funny, right?<br>That cost money.",
+                sub: "Well, not really. But the developer did skip lunch.<br>KES 10 fixes that."
+            },
+            {
+                headline: "Still here? Respect.<br>Now kindly tip the chef.",
+                sub: "No API was harmed in making this site.<br>Send 10 bob. For democracy. For chai."
+            },
+            {
+                headline: "Even the boomerang came back.<br>Will you?",
+                sub: "Unlike politicians, this support request<br>will only appear a few times. Promise."
+            }
+        ];
+
+        let mpesaShownScenes = new Set();
+        let mpesaTriggerScenes = new Set();
+
+        function setupMpesaTriggers() {
+            const pool = [2, 4, 6, 8, 10];
+            pool.sort(() => Math.random() - 0.5).slice(0, 3).forEach(s => mpesaTriggerScenes.add(s));
+        }
+
+        function maybeTriggerMpesa(idx) {
+            if (idx === 0) return;
+            if (!mpesaTriggerScenes.has(idx)) return;
+            if (mpesaShownScenes.has(idx)) return;
+            mpesaShownScenes.add(idx);
+            const msg = mpesaMessages[Math.floor(Math.random() * mpesaMessages.length)];
+            document.getElementById('mpesaHeadline').innerHTML = msg.headline;
+            document.getElementById('mpesaSubline').innerHTML = msg.sub;
+            document.getElementById('copyBtn').textContent = 'tap to copy number';
+            setTimeout(() => document.getElementById('mpesaBackdrop').classList.add('show'), 1200);
+        }
+
+        function closeMpesa() {
+            document.getElementById('mpesaBackdrop').classList.remove('show');
+        }
+
+        function copyNumber() {
+            navigator.clipboard.writeText('0711139646').then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.textContent = '✓ copied!';
+                setTimeout(() => { btn.textContent = 'tap to copy number'; }, 2000);
+            }).catch(() => {
+                document.getElementById('copyBtn').textContent = '0711139646';
+            });
+        }
+
+        document.getElementById('mpesaBackdrop').addEventListener('click', function (e) {
+            if (e.target === this) closeMpesa();
+        });
+
+        setupMpesaTriggers();
         showScene(0);
     </script>
 </body>
