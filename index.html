@@ -233,6 +233,60 @@
             border-color: rgba(245, 240, 232, 0.4);
         }
 
+        /* ── DIVIDER ── */
+        .mpesa-divider {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 0.6rem;
+            color: rgba(245, 240, 232, 0.2);
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+        }
+
+        .mpesa-divider::before,
+        .mpesa-divider::after {
+            content: '';
+            flex: 1;
+            border-top: 1px solid rgba(245, 240, 232, 0.12);
+        }
+
+        /* ── BITCOIN SECTION ── */
+        .btc-wrap {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(247, 147, 26, 0.07);
+            border: 1.5px solid rgba(247, 147, 26, 0.35);
+            padding: 0.7rem 1rem;
+        }
+
+        .btc-question {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1rem, 3.5vw, 1.3rem);
+            letter-spacing: 0.08em;
+            color: #f7931a;
+        }
+
+        .btc-sub {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(0.65rem, 2vw, 0.8rem);
+            color: rgba(245, 240, 232, 0.45);
+            text-align: center;
+        }
+
+        .btc-address {
+            font-family: 'Courier Prime', monospace;
+            font-size: clamp(0.5rem, 1.5vw, 0.65rem);
+            color: rgba(247, 147, 26, 0.7);
+            word-break: break-all;
+            text-align: center;
+            letter-spacing: 0.02em;
+            padding: 0.3rem 0;
+        }
+
         /* ══ SCENE 0 — LANDING ══ */
         #scene-0 {
             background: var(--black);
@@ -1108,6 +1162,17 @@
                 <button class="mpesa-copy-btn" id="copyBtn" onclick="copyNumber()">tap to copy number</button>
             </div>
             <div class="mpesa-amount">KES 10 · KES 50 · KES 100 — your heart, your call 🙏</div>
+
+            <div class="mpesa-divider"><span>or</span></div>
+
+            <div class="btc-wrap">
+                <div class="btc-question">⚡ Are you a Bitcoiner?</div>
+                <div class="btc-sub">Send sats via Lightning. Any amount. Even 1 sat counts.</div>
+                <div class="btc-address">
+                    lnurl1dp68gurn8ghj7urjd9kkzmpwdejhgtewwajkcmpdddhx7amw9akxuatjd3cz7atvw3exzcnpwserzl5jft7</div>
+                <button class="mpesa-copy-btn" id="copyLnBtn" onclick="copyLnurl()">tap to copy lnurl</button>
+            </div>
+
             <button class="mpesa-dismiss" onclick="closeMpesa()">Maybe later (no pressure)</button>
         </div>
     </div>
@@ -1383,6 +1448,17 @@
                 setTimeout(() => { btn.textContent = 'tap to copy number'; }, 2000);
             }).catch(() => {
                 document.getElementById('copyBtn').textContent = '0711139646';
+            });
+        }
+
+        function copyLnurl() {
+            const lnurl = 'lnurl1dp68gurn8ghj7urjd9kkzmpwdejhgtewwajkcmpdddhx7amw9akxuatjd3cz7atvw3exzcnpwserzl5jft7';
+            navigator.clipboard.writeText(lnurl).then(() => {
+                const btn = document.getElementById('copyLnBtn');
+                btn.textContent = '⚡ copied!';
+                setTimeout(() => { btn.textContent = 'tap to copy lnurl'; }, 2000);
+            }).catch(() => {
+                document.getElementById('copyLnBtn').textContent = 'copy failed — select manually';
             });
         }
 
